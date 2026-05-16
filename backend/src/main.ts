@@ -1,8 +1,16 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common' // 1. Add this import 
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  //2. Add this line to enable the "Bouncer" globally
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,// Strips away any data that is NOT in the DTO
+    forbidNonWhitelisted: true, // Throws error if extra data is sent
+    transform: true, // Automatically transforms string params to number
+  }))
 
   // Use PORT from .env file, fall back to 3001 if not set
   // parseInt() converts the string "3001" to a number
