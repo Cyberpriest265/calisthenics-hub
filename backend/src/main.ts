@@ -5,6 +5,12 @@ import { ValidationPipe } from '@nestjs/common' // 1. Add this import
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Allow requests from the Next.js frontend
+  app.enableCors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  });
+
   //2. Add this line to enable the "Bouncer" globally
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,// Strips away any data that is NOT in the DTO
