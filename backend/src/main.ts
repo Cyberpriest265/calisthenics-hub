@@ -5,9 +5,14 @@ import { ValidationPipe } from '@nestjs/common' // 1. Add this import
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Allow requests from the Next.js frontend
+  // Allow requests from the frontend (set FRONTEND_URL in production)
+  const allowedOrigins = [
+    process.env.FRONTEND_URL,       // Production: your Vercel URL
+    'http://localhost:3000',         // Local dev
+  ].filter(Boolean);
+
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: allowedOrigins,
     credentials: true,
   });
 
