@@ -45,7 +45,7 @@ export default function Navbar() {
       {/* Spacer so content doesn't hide under fixed nav */}
       <div style={{ height: 72 }} />
 
-      <nav style={{
+      <nav className="navbar-container" style={{
         position: 'fixed',
         top: 16,
         left: '50%',
@@ -72,7 +72,7 @@ export default function Navbar() {
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '10px 20px',
-        transition: 'background 0.3s, box-shadow 0.3s',
+        transition: 'background 0.3s, box-shadow 0.3s, padding 0.3s, width 0.3s, top 0.3s',
       }}>
 
         {/* ── LEFT: Brand ── */}
@@ -90,8 +90,8 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* ── CENTER: Nav Links ── */}
-        <ul style={{
+        {/* ── CENTER: Nav Links (Hidden on mobile) ── */}
+        <ul className="nav-center-menu" style={{
           display: 'flex',
           alignItems: 'center',
           gap: 2,
@@ -148,31 +148,60 @@ export default function Navbar() {
         {/* ── RIGHT: Auth CTA ── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
           {user ? (
-            <button
-              onClick={handleLogout}
-              style={{
-                background: 'transparent',
-                color: '#8e8e90',
-                border: 'none',
-                borderRadius: 86,
-                padding: '7px 14px',
-                fontSize: 14,
-                fontWeight: 500,
-                letterSpacing: '0.2px',
-                cursor: 'pointer',
-                transition: 'color 0.15s',
-                fontFamily: 'inherit',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#ffffff')}
-              onMouseLeave={e => (e.currentTarget.style.color = '#8e8e90')}
-            >
-              Log out
-            </button>
+            <>
+              {/* Ghost Logout (Hidden on mobile, Dashboard handles it) */}
+              <button
+                onClick={handleLogout}
+                className="nav-ghost-btn"
+                style={{
+                  background: 'transparent',
+                  color: '#8e8e90',
+                  border: 'none',
+                  borderRadius: 86,
+                  padding: '7px 14px',
+                  fontSize: 14,
+                  fontWeight: 500,
+                  letterSpacing: '0.2px',
+                  cursor: 'pointer',
+                  transition: 'color 0.15s',
+                  fontFamily: 'inherit',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#ffffff')}
+                onMouseLeave={e => (e.currentTarget.style.color = '#8e8e90')}
+              >
+                Log out
+              </button>
+
+              {/* Mobile fallback button to go straight to dashboard */}
+              <Link href="/dashboard" style={{ textDecoration: 'none' }}>
+                <button
+                  style={{
+                    background: 'hsla(0,0%,100%,0.08)',
+                    color: '#ffffff',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    borderRadius: 86,
+                    padding: '7px 14px',
+                    fontSize: 13,
+                    fontWeight: 600,
+                    letterSpacing: '0.2px',
+                    cursor: 'pointer',
+                    transition: 'background 0.2s',
+                    fontFamily: 'inherit',
+                    whiteSpace: 'nowrap',
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'hsla(0,0%,100%,0.15)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = 'hsla(0,0%,100%,0.08)')}
+                >
+                  Dashboard
+                </button>
+              </Link>
+            </>
           ) : (
             <>
-              {/* Ghost sign-in */}
+              {/* Ghost Sign-in (Hidden on mobile) */}
               <Link
                 href="/login"
+                className="nav-ghost-btn"
                 style={{
                   ...linkStyle,
                   display: 'inline-block',
@@ -184,7 +213,7 @@ export default function Navbar() {
                 Sign in
               </Link>
 
-              {/* White pill CTA — Raycast signature */}
+              {/* White pill CTA (Raycast signature, visible on mobile) */}
               <Link href="/register" style={{ textDecoration: 'none' }}>
                 <button
                   style={{

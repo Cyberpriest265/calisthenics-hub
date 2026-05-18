@@ -875,4 +875,13 @@ input, textarea { font-family: inherit; }
   .courses-grid { grid-template-columns: 1fr; }
   .navbar-links .nav-link { display: none; }
   .price-box { padding: 24px; }
+
+  /* Suspended glass navbar responsive styling */
+  .nav-center-menu { display: none !important; }
+  .nav-ghost-btn { display: none !important; }
+  .navbar-container {
+    padding: 8px 14px !important;
+    width: calc(100% - 24px) !important;
+    top: 12px !important;
+  }
 }
