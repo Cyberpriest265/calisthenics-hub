@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Navbar from './components/Navbar';
 import NewsletterForm from './components/NewsletterForm';
+import FadeIn from './components/FadeIn';
 
 interface Course {
   id: string;
@@ -48,35 +49,43 @@ export default function HomePage() {
       <section className="hero">
         <div className="container">
 
-          {/* Eyebrow badge */}
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 32 }}>
-            <span className="hero-eyebrow">
-              <span className="hero-eyebrow-dot" />
-              Bodyweight · Precision · Results
-            </span>
-          </div>
+          <FadeIn direction="up" delay={0.2}>
+            {/* Eyebrow badge */}
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 32 }}>
+              <span className="hero-eyebrow">
+                <span className="hero-eyebrow-dot" />
+                Bodyweight · Precision · Results
+              </span>
+            </div>
+          </FadeIn>
 
-          {/* Headline */}
-          <h1 className="hero-title">
-            Train smarter.<br />
-            Move <span className="hero-title-accent">better.</span>
-          </h1>
+          <FadeIn direction="up" delay={0.2}>
+            {/* Headline */}
+            <h1 className="hero-title">
+              Train smarter.<br />
+              Move <span className="hero-title-accent">better.</span>
+            </h1>
+          </FadeIn>
 
-          {/* Subtitle */}
-          <p className="hero-subtitle">
-            Expert-led calisthenics courses designed for progression.
-            From your first pull-up to the muscle-up — structured, proven, yours.
-          </p>
+          <FadeIn direction="up" delay={0.3}>
+            {/* Subtitle */}
+            <p className="hero-subtitle">
+              Expert-led calisthenics courses designed for progression.
+              From your first pull-up to the muscle-up — structured, proven, yours.
+            </p>
+          </FadeIn>
 
-          {/* CTAs — use native <a> for hash scroll */}
-          <div className="hero-actions">
-            <a href="#courses">
-              <button className="btn-cta">Start Training</button>
-            </a>
-            <a href="#about">
-              <button className="btn-primary">Meet The Coach</button>
-            </a>
-          </div>
+          <FadeIn direction="up" delay={0.4}>
+            {/* CTAs — use native <a> for hash scroll */}
+            <div className="hero-actions">
+              <a href="#courses">
+                <button className="btn-cta">Start Training</button>
+              </a>
+              <a href="#about">
+                <button className="btn-primary">Meet The Coach</button>
+              </a>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -89,11 +98,13 @@ export default function HomePage() {
               { value: '2.4k', label: 'Active Students' },
               { value: '98%',  label: 'Completion Rate' },
               { value: '10+',  label: 'Years Experience' },
-            ].map(s => (
-              <div key={s.label} className="stat-item">
-                <div className="stat-value">{s.value}</div>
-                <div className="stat-label">{s.label}</div>
-              </div>
+            ].map((s, i) => (
+              <FadeIn key={s.label} direction="up" delay={0.1 * i}>
+                <div className="stat-item">
+                  <div className="stat-value">{s.value}</div>
+                  <div className="stat-label">{s.label}</div>
+                </div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -102,27 +113,31 @@ export default function HomePage() {
       {/* COURSES */}
       <section className="section" id="courses">
         <div className="container">
-          <div style={{ marginBottom: 48 }}>
-            <div className="section-label">Curriculum</div>
-            <h2 className="section-heading">Programs & Coaching</h2>
-            <p className="section-body">
-              Structured programs built around progressive overload, movement quality, and long-term results.
-            </p>
-          </div>
+          <FadeIn direction="up" delay={0.1}>
+            <div style={{ marginBottom: 48 }}>
+              <div className="section-label">Curriculum</div>
+              <h2 className="section-heading">Programs & Coaching</h2>
+              <p className="section-body">
+                Structured programs built around progressive overload, movement quality, and long-term results.
+              </p>
+            </div>
+          </FadeIn>
 
           <div className="courses-grid">
-            {courses.map((course) => (
-              <a key={course.id} href={course.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                <div className="course-card">
-                  <span className="course-tag">{course.tag}</span>
-                  <h3 className="course-title">{course.title}</h3>
-                  <p className="course-description">{course.description}</p>
-                  <div className="course-footer">
-                    <span className="course-price">${course.price}</span>
-                    <span className="course-badge">Enroll Now →</span>
+            {courses.map((course, i) => (
+              <FadeIn key={course.id} direction="up" delay={0.1 * i} fullWidth>
+                <a href={course.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
+                  <div className="course-card">
+                    <span className="course-tag">{course.tag}</span>
+                    <h3 className="course-title">{course.title}</h3>
+                    <p className="course-description">{course.description}</p>
+                    <div className="course-footer">
+                      <span className="course-price">${course.price}</span>
+                      <span className="course-badge">Enroll Now →</span>
+                    </div>
                   </div>
-                </div>
-              </a>
+                </a>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -131,46 +146,50 @@ export default function HomePage() {
       {/* ABOUT INSTRUCTOR */}
       <section className="section" id="about" style={{ background: 'rgba(255,255,255,0.02)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
         <div className="container">
-          <div style={{ maxWidth: 600, margin: '0 auto', textAlign: 'center' }}>
-            <div className="section-label" style={{ justifyContent: 'center' }}>The Coach</div>
-            <h2 className="section-heading">Hi, I'm John Doe</h2>
-            <p className="section-body" style={{ margin: '0 auto 32px' }}>
-              I've spent the last decade mastering bodyweight training and helping thousands of athletes unlock skills they never thought possible. My philosophy is simple: master the basics, respect the progression, and train with intention.
-            </p>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 16 }}>
-              <span style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>✓ ISSA Certified</span>
-              <span style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>✓ 10+ Years Experience</span>
+          <FadeIn direction="up">
+            <div style={{ maxWidth: 600, margin: '0 auto', textAlign: 'center' }}>
+              <div className="section-label" style={{ justifyContent: 'center' }}>The Coach</div>
+              <h2 className="section-heading">Hi, I'm Lanre Grey</h2>
+              <p className="section-body" style={{ margin: '0 auto 32px' }}>
+                I've spent the last decade mastering bodyweight training and helping thousands of athletes unlock skills they never thought possible. My philosophy is simple: master the basics, respect the progression, and train with intention.
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: 16 }}>
+                <span style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>✓ ISSA Certified</span>
+                <span style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>✓ 10+ Years Experience</span>
+              </div>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* NEWSLETTER CTA BAND */}
       <section className="section" id="newsletter" style={{ textAlign: 'center' }}>
         <div className="container" style={{ maxWidth: 600 }}>
-          <p style={{ fontSize: 12, fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 20 }}>
-            Stay Updated
-          </p>
-          <h2 style={{ fontSize: 'clamp(28px,4vw,40px)', fontWeight: 600, letterSpacing: 0, lineHeight: 1.15, color: 'var(--fg)', marginBottom: 16 }}>
-            Free Weekly Training Tips.
-          </h2>
-          <p style={{ fontSize: 16, fontWeight: 500, letterSpacing: '0.2px', color: 'var(--med-gray)', marginBottom: 40 }}>
-            Join 5,000+ athletes receiving exclusive routines and mobility drills every Monday.
-          </p>
-          
-          {/* Newsletter Placeholder Form */}
-          <NewsletterForm />
-          <p style={{ fontSize: 12, color: 'var(--text-tertiary)', marginTop: 16 }}>
-            No spam. Unsubscribe anytime.
-          </p>
+          <FadeIn direction="up">
+            <p style={{ fontSize: 12, fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase', color: 'var(--text-tertiary)', marginBottom: 20 }}>
+              Stay Updated
+            </p>
+            <h2 style={{ fontSize: 'clamp(28px,4vw,40px)', fontWeight: 600, letterSpacing: 0, lineHeight: 1.15, color: 'var(--fg)', marginBottom: 16 }}>
+              Free Weekly Training Tips.
+            </h2>
+            <p style={{ fontSize: 16, fontWeight: 500, letterSpacing: '0.2px', color: 'var(--med-gray)', marginBottom: 40 }}>
+              Join 5,000+ athletes receiving exclusive routines and mobility drills every Monday.
+            </p>
+            
+            {/* Newsletter Placeholder Form */}
+            <NewsletterForm />
+            <p style={{ fontSize: 12, color: 'var(--text-tertiary)', marginTop: 16 }}>
+              No spam. Unsubscribe anytime.
+            </p>
+          </FadeIn>
         </div>
       </section>
 
       {/* FOOTER */}
       <footer className="footer">
-        <span className="footer-brand">⚡ CalisthenicsHub</span>
+        <span className="footer-brand"> CalisthenicsHub</span>
         <span className="footer-copy">
-          © {new Date().getFullYear()} CalisthenicsHub. Built with <span className="footer-accent">♥</span>
+          © {new Date().getFullYear()} CalisthenicsHub. Built with <span className="footer-accent"></span>
         </span>
       </footer>
     </>

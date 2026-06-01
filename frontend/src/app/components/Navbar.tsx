@@ -71,7 +71,7 @@ export default function Navbar() {
             alignItems: 'center',
             gap: 7,
           }}>
-            ⚡ CalisthenicsHub
+             CalisthenicsHub
           </span>
         </Link>
 
