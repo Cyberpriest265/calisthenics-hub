@@ -1,93 +1,51 @@
 # Functional Requirements Document (FRD) - CalisthenicsHub
 
-> **Last Updated:** May 2026  
-> **Status:** 🟡 In Progress
+> **Last Updated:** June 2026  
+> **Status:** 🟢 Refactored for Static Architecture
 
 ---
 
-## Implementation Status
+## Architecture Overview
+The project has shifted from a complex full-stack SaaS platform to a high-performance, frontend-first marketing website. The primary goal is to showcase the instructor, capture newsletter leads, and redirect users to an external platform for course purchasing and consumption.
 
-| Feature | Status |
-|---|---|
-| User Registration & Login | ✅ Complete |
-| JWT Authentication | ✅ Complete |
-| Role-Based Access Control (ADMIN / STUDENT) | ✅ Complete |
-| Course CRUD (Admin) | ✅ Complete |
-| Lesson CRUD (Admin) | ✅ Complete |
-| Publish / Unpublish Courses | ✅ Complete |
-| Public Course Catalog | ✅ Complete |
-| Course Detail Page | ✅ Complete |
-| Student Dashboard | ✅ Complete |
-| Admin Panel (Browser UI) | ✅ Complete |
-| Paystack Payment Integration | 🔄 In Progress |
-| Email Verification | 🔲 Planned |
-| Video Player | 🔲 Planned |
-| Progress Tracking | 🔲 Planned |
-| Sales Analytics | 🔲 Planned |
+No sensitive user data, passwords, or transaction histories are stored on this infrastructure.
 
 ---
 
-## 1. User Authentication & Authorization
+## 1. Landing Page (Public Marketing Website)
 
-- ✅ Users can register with name, email, and password.
-- ✅ Users can log in to receive a JWT (JSON Web Token).
-- ✅ Two Roles: `STUDENT` (default) and `ADMIN` (instructor).
-- ✅ Protected routes enforced via JWT guards on the backend.
-- ✅ Role-based UI — Admin sees admin panel link; Students see dashboard only.
-- 🔲 Email verification before accessing paid content.
+- ✅ **Hero Section**: High-impact visual + CTA button leading to programs or newsletter.
+- ✅ **Programs & Coaching Catalog**: Static cards showcasing available programs, coaching packages, and digital products.
+- ✅ **Instructor Bio (About)**: Dedicated section for experience, certifications, and personal branding to build trust.
+- 🔲 **Testimonials**: Social proof and success stories from previous students.
+- 🔲 **Contact Section**: Simple method for inquiries (either a `mailto:` link or a privacy-conscious form service like Formspree).
 
-## 2. Public Marketing Website
+## 2. External Course Platform Integration
 
-- ✅ **Hero Section**: High-impact visual + "Start Training" button.
-- ✅ **Course Catalog**: Cards showing all published courses with price.
-- ✅ **Course Detail Page**: Description, lesson list, and enroll button.
-- 🔲 **Instructor Bio**: Experience, certifications, and branding.
-- 🔲 **Testimonials**: Social proof from previous students.
-- 🔲 **Contact Form**: Direct lead generation.
+The website acts as a funnel. It **does not** handle payments or host course content.
 
-## 3. Student Dashboard
+- ✅ **External Redirects**: All "Buy Now" or "Enroll" buttons must link out to a dedicated third-party platform (e.g., Kajabi, Teachable, Thinkific, Gumroad).
+- ✅ **No Local Authentication**: The application contains no login, registration, or dashboard screens. Authentication happens entirely on the external course platform.
 
-- ✅ **Browse Courses**: View all published courses.
-- ✅ **User Profile**: Display name, email, and role badge.
-- 🔲 **My Courses**: List of all purchased programs.
-- 🔲 **Video Player**: High-quality video streaming for lessons.
-- 🔲 **Progress Tracking**: See % completion of each course.
-- 🔲 **Profile Management**: Update name, avatar, and password.
+## 3. Newsletter Subscription
 
-## 4. Admin Dashboard (Instructor Only)
+- 🔲 **Email Capture Form**: A simple, embedded form to capture visitor emails.
+- 🔲 **Integration**: Connected to a privacy-conscious email provider (e.g., ConvertKit, Mailchimp, Beehiiv) via API or direct embed.
+- 🔲 **Data Minimization**: Collects *only* email addresses (and optionally first name). No passwords or user profiles.
 
-- ✅ **Course Manager**: Create, edit, delete, publish/unpublish courses via browser UI.
-- ✅ **Lesson Manager**: Add and delete lessons per course.
-- ✅ **Stats Overview**: Total courses, published count, draft count, total lessons.
-- 🔲 **Video Uploader**: Securely upload workout videos.
-- 🔲 **User Management**: View list of students and their progress.
-- 🔲 **Sales Analytics**: View revenue and number of active students.
+## 4. Mobile Responsiveness & UI/UX
 
-## 5. Payment System (Paystack)
-
-- 🔄 Students can purchase a course using a card via Paystack.
-- 🔄 System creates a `Purchase` record in the database after payment.
-- 🔄 Course is automatically unlocked after a successful payment.
-- 🔲 Students can view their order history.
+- ✅ **Design System**: Adheres to the established Raycast-inspired dark-mode aesthetic.
+- ✅ **Responsive Navigation**: Suspended glassmorphism navbar that adapts smoothly to mobile viewports.
+- ✅ **Performance**: Static Site Generation (SSG) ensures near-instant load times across all devices.
 
 ---
 
-## Tech Stack
-
-### Backend
-- **Runtime**: Node.js
-- **Framework**: NestJS (TypeScript)
-- **Database**: PostgreSQL
-- **ORM**: Prisma 7
-- **Auth**: JWT + Passport.js
-- **Payments**: Paystack
-
-### Frontend
-- **Framework**: Next.js 15 (App Router)
-- **Language**: TypeScript
-- **Styling**: Vanilla CSS (custom design system)
-
-### Infrastructure
-- **Version Control**: Git / GitHub
-- **Local Dev**: `npm run start:dev` + `npm run dev`
-- **Deployment**: Railway (backend) + Vercel (frontend) — *Planned*
+## Out of Scope (Removed Features)
+To minimize security risks and maintenance overhead, the following features have been explicitly removed:
+- ❌ User Registration & Login
+- ❌ Password Storage & Recovery
+- ❌ Internal Payment Processing (Paystack/Stripe integration)
+- ❌ User Dashboards & Progress Tracking
+- ❌ Admin Panels & Internal Course CMS
+- ❌ PostgreSQL Database & ORM
